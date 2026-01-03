@@ -1,0 +1,33 @@
+/* Base toast style */
+.Toastify__toast {
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  backdrop-filter: blur(12px);
+  color: #fff;
+}
+
+/* Success → Purple Gradient */
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #6d28d9, #9333ea); /* violet to purple */
+  color: #fff;
+}
+
+/* Error → Red Gradient */
+.Toastify__toast--error {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  color: #fff;
+}
+
+/* Info → Blue Gradient */
+.Toastify__toast--info {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #fff;
+}
+
+/* Warning → Amber Gradient */
+.Toastify__toast--warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+}
