@@ -70,16 +70,17 @@
 }
 
 .new-chat:hover {
-  background: rgba(34, 211, 238, 0.03);
-  border-color: rgba(34, 211, 238, 0.1);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(34, 211, 238, 0.05);
+  border-color: rgba(34, 211, 238, 0.2);
+  color: var(--text-bright);
+  transform: translateX(4px);
 }
 
 .new-chat.active {
-  background: linear-gradient(90deg, rgba(34, 211, 238, 0.1), transparent);
-  border-left: 2px solid #22D3EE;
-  color: #22D3EE;
-  box-shadow: inset 10px 0 20px -10px rgba(34, 211, 238, 0.1);
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.15), transparent);
+  border-left: 3px solid var(--primary-cyan);
+  color: var(--primary-cyan);
+  box-shadow: inset 15px 0 30px -15px rgba(34, 211, 238, 0.2);
 }
 
 .new-chat p {
