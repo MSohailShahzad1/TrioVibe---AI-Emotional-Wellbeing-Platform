@@ -5,6 +5,10 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import UserIcon from "../assets/user_icon.png";
 
+/**
+ * UserContext provides authentication state and user profile management
+ * across the entire TrioVibe application.
+ */
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
@@ -12,7 +16,10 @@ export const UserProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Enhanced user data fetch with error handling
+  /**
+   * Fetches fresh user profile data from the backend using the JWT token
+   * stored in localStorage. Synchronizes the local user state.
+   */
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -32,7 +39,7 @@ export const UserProvider = ({ children }) => {
 
       if (res.ok) {
         const data = await res.json();
-        
+
         const formattedUser = {
           _id: data.user._id,
           name: data.user.name || data.user.username || "",
@@ -59,10 +66,10 @@ export const UserProvider = ({ children }) => {
         localStorage.setItem("userProfile", JSON.stringify(formattedUser));
         localStorage.setItem("userRole", formattedUser.role); // Store role separately for easy access
         setIsAuthenticated(true);
-        
+
         // Update online status via socket if available
         updateOnlineStatus(true);
-        
+
       } else {
         // Token is invalid or expired
         if (res.status === 401) {
@@ -114,7 +121,7 @@ export const UserProvider = ({ children }) => {
         }
         setUser(parsedUser);
         setIsAuthenticated(true);
-        
+
         // Then fetch fresh data from backend
         await fetchUserData();
       } else {
@@ -153,8 +160,8 @@ export const UserProvider = ({ children }) => {
 
       localStorage.setItem("userProfile", JSON.stringify(formattedUser));
       if (!userData.role) {
-  console.warn("⚠️ Role missing from login response");
-}
+        console.warn("⚠️ Role missing from login response");
+      }
 
       if (formattedUser.role) {
         localStorage.setItem("userRole", formattedUser.role);
@@ -208,12 +215,12 @@ export const UserProvider = ({ children }) => {
         ...updatedData.profile
       }
     };
-    
+
     // Update role in localStorage if it changed
     if (updatedData.role) {
       localStorage.setItem("userRole", updatedData.role);
     }
-    
+
     setUser(updatedUser);
     localStorage.setItem("userProfile", JSON.stringify(updatedUser));
   };
