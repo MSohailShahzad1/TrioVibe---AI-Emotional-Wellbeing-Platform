@@ -1,4 +1,4 @@
-# TrioVibe 🌈
+# TrioVibe 
 
 TrioVibe is a comprehensive, AI-powered emotional wellbeing platform designed to bridge the gap between technology and mental health. It leverages multi-modal emotion analysis (Text, Voice, Image, and Video) to provide users with deep insights into their emotional state and connects them with professional support.
 
@@ -41,16 +41,17 @@ TrioVibe is a comprehensive, AI-powered emotional wellbeing platform designed to
 ## 🚀 Getting Started
 
 ### Prerequisites
+- React.js (v18+)
 - Node.js (v18+)
-- MongoDB
+- MongoDB            
 - Python (for ML models)
 
 ### Installation
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/TrioVibe.git
-   cd TrioVibe
+   git clone https://github.com/MSohailShahzad1/TrioVibe---AI-Emotional-Wellbeing-Platform.git
+   cd TrioVibe-main
    ```
 
 2. **Frontend Setup**:
@@ -78,5 +79,5 @@ TrioVibe is a comprehensive, AI-powered emotional wellbeing platform designed to
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 🤝 Contact
-Your Name - [your-email@example.com](mailto:your-email@example.com)
-Project Link: [https://github.com/your-username/TrioVibe](https://github.com/your-username/TrioVibe)
+MSohailShahzad1 - [msohailshahzad13579@gmail.com](mailto:msohailshahzad13579@gmail.com)
+Project Link: [https://github.com/MSohailShahzad1/TrioVibe---AI-Emotional-Wellbeing-Platform](https://github.com/MSohailShahzad1/TrioVibe---AI-Emotional-Wellbeing-Platform)
