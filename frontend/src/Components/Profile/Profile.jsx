@@ -273,12 +273,12 @@ const Profile = () => {
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="glass-card p-6 hover:scale-105 transition-transform">
+          <div className="glass-card p-6 hover:scale-105 transition-all duration-300 border border-white/5 hover:border-cyan-500/20 hover:shadow-[0_0_20px_rgba(34,211,238,0.05)]">
             <div className="flex items-center justify-between mb-2">
               <FaChartLine className="text-cyan-400 text-2xl" />
               <span className="text-3xl font-bold text-bright">{stats.totalAnalyses}</span>
             </div>
-            <p className="text-dim text-sm font-medium">Total Analyses</p>
+            <p className="text-dim text-sm font-semibold uppercase tracking-wider">Total Analyses</p>
           </div>
 
           <div className="glass-card p-6 hover:scale-105 transition-transform">
