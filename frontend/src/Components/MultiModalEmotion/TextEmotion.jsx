@@ -153,7 +153,7 @@ export default function TextEmotion() {
             disabled={loading}
             className="auth-btn !w-80"
           >
-            {loading ? <div className="flex items-center gap-3 justify-center"><div className="w-5 h-5 border-2 border-white border-t-transparent animate-spin rounded-full" />Processing...</div> : "Analyze Sentiment & Logic"}
+            {loading ? <div className="flex items-center gap-3 justify-center"><div className="w-5 h-5 border-2 border-white border-t-transparent animate-spin rounded-full" />Processing...</div> : "Initialize Neural Analysis"}
           </button>
         </div>
 
