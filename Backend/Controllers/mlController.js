@@ -16,8 +16,11 @@ export const predictTextEmotion = async (req, res) => {
         // Path to the Python script (located in the parent directory of Controllers)
         const scriptPath = path.join(__dirname, "../ml_predict.py");
 
+        // Determine python command (macOS/Linux usually use python3)
+        const pythonCommand = process.platform === "win32" ? "python" : "python3";
+
         // Spawn Python process
-        const pythonProcess = spawn("python", [scriptPath, text]);
+        const pythonProcess = spawn(pythonCommand, [scriptPath, text]);
 
         let dataString = "";
         let errorString = "";
@@ -28,6 +31,18 @@ export const predictTextEmotion = async (req, res) => {
 
         pythonProcess.stderr.on("data", (data) => {
             errorString += data.toString();
+        });
+
+        // Handle process errors (like command not found)
+        pythonProcess.on("error", (err) => {
+            console.error(`Failed to start Python process: ${err.message}`);
+            if (!res.headersSent) {
+                res.status(500).json({
+                    success: false,
+                    message: `Python not found (${pythonCommand}). Please ensure Python is installed and in your PATH.`,
+                    error: err.message
+                });
+            }
         });
 
         pythonProcess.on("close", (code) => {
