@@ -1,37 +1,17 @@
-// import express from"express"
-// import { checkAuth, editProfile, forgotPasswordRequest, getCurrentUser, getSuggestedUsers, getUserProfile, login, removeAcc,  resendOtp, resetPassword, signupRequest, updateProfile, VerifyOTP,  verifyResetOtp} from "../Controllers/userControlller.js";
-// import { protectRoute } from "../middleware/auth.js";
-
-
-// const userRouter=express.Router();
-
-// // userRouter.post("/signup",signup);
-// userRouter.post("/signup-request",signupRequest);
-// userRouter.post("/signup/verify-otp",verifyResetOtp);
-// userRouter.post("/signup/resend-otp",resendOtp)
-// userRouter.post("/login",login);
-// userRouter.post("/forgot-password-request",forgotPasswordRequest),
-// userRouter.post("/verify-reset-otp",VerifyOTP),
-// userRouter.post("/reset-password",resetPassword),
-// userRouter.put("/updateProfile",protectRoute,updateProfile);
-// userRouter.get("/check",protectRoute,checkAuth);
-// userRouter.get("/profile",protectRoute,getCurrentUser);
-// userRouter.delete("/remove",removeAcc);
-// userRouter.get("profile/:userId",getUserProfile);
-// userRouter.get("/suggested",protectRoute,getSuggestedUsers);
-// userRouter.put("edit-profile",protectRoute,editProfile);
-
-// export default userRouter;
-
 // routes/userRoutes.js
+/**
+ * User Routes
+ * Handles user profile management, suggested users, and search functionality.
+ * All routes in this module are protected by the protectRoute middleware.
+ */
 import express from "express";
-import { 
-  getCurrentUser, 
-  getSuggestedUsers, 
-  getUserProfile, 
-  updateProfile, 
+import {
+  getCurrentUser,
+  getSuggestedUsers,
+  getUserProfile,
+  updateProfile,
   editProfile,
-  removeAcc, 
+  removeAcc,
   updateOnlineStatus,
   searchUsers,
   advancedSearch
@@ -51,9 +31,9 @@ userRouter.put("/edit-profile", editProfile);
 
 // User management
 userRouter.get("/suggested", getSuggestedUsers);
-userRouter.get('/search',searchUsers)
-userRouter.get("/search/advance",advancedSearch)
-userRouter.post("/online-status",updateOnlineStatus)
+userRouter.get('/search', searchUsers)
+userRouter.get("/search/advance", advancedSearch)
+userRouter.post("/online-status", updateOnlineStatus)
 userRouter.delete("/remove", removeAcc);
 
 export default userRouter;
