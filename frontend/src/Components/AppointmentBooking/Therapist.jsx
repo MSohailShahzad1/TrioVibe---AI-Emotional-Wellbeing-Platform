@@ -161,7 +161,8 @@ export default function Therapists() {
             <div
               key={t._id}
               className="
-                glass-card p-6 hover:-translate-y-2 hover:shadow-2xl
+                glass-card p-6 border border-white/10 hover:border-cyan-500/30 
+                hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_0_30px_rgba(34,211,238,0.1)]
               "
             >
               {/* Avatar */}
