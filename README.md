@@ -70,8 +70,14 @@ TrioVibe is a comprehensive, AI-powered emotional wellbeing platform designed to
    npm start
    ```
 
-4. **ML Models Setup** (Optional for UI testing):
-   - Ensure Python dependencies are installed as required by the `ml_predict.py` scripts.
+4. **ML Models Setup**:
+   - Ensure Python dependencies are installed: `pip install scikit-learn`
+   - The platform automatically detects OS and uses `python3` on macOS/Linux.
+
+---
+
+## ✅ Status: Production Ready
+TrioVibe has undergone a full UI/UX overhaul and architecture refinement. It is now fully responsive, theme-aware, and cross-platform compatible.
 
 ---
 
