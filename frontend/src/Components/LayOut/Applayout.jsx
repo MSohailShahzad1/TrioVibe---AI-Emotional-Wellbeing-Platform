@@ -20,10 +20,7 @@ const AppLayout = () => {
 
       {/* Main Content Area */}
       <main className="relative z-10 flex-1 w-full overflow-y-auto overflow-x-hidden max-w-full custom-scrollbar" style={{ minWidth: 0 }}>
-        <div className="p-4 md:p-8 min-h-full">
-
-          <Outlet />
-        </div>
+        <Outlet />
       </main>
     </div>
   );

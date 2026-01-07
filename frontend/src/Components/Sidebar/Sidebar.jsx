@@ -7,6 +7,7 @@ import { assets } from "../../assets/assets";
 import { sidebarItems } from "./SidebarConfig";
 import { useUser } from "../../Context/UserContext";
 import ThemeToggle from "../common/ThemeToggle";
+import BecomeTherapist from "../Profile/BecomeTherapist";
 
 const Sidebar = () => {
   const [extended, setExtended] = useState(
@@ -67,8 +68,23 @@ const Sidebar = () => {
       </div>
 
       {/* ---------- BOTTOM ---------- */}
-      <div className="sidebar-bottom p-2 flex flex-col items-center gap-4">
-        <ThemeToggle />
+      <div className="sidebar-bottom p-4 flex flex-col items-stretch gap-4 border-t border-white/5">
+        {userRole === "user" && (
+          <NavLink
+            to="/upgrade"
+            className={({ isActive }) =>
+              `upgrade-btn flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-bold text-xs uppercase tracking-widest border border-cyan-500/20 hover:bg-cyan-500/10 ${isActive ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/40' : 'text-dim hover:text-cyan-400'}`
+            }
+          >
+            <div className="w-5 h-5 flex items-center justify-center">
+              👤
+            </div>
+            {extended && <span>Upgrade Account</span>}
+          </NavLink>
+        )}
+        <div className="flex justify-center">
+          <ThemeToggle />
+        </div>
       </div>
     </div>
   );

@@ -57,8 +57,11 @@ import EmotionHome from './Components/MultiModalEmotion/EmotionHome'
 import FaceEmotion from './Components/MultiModalEmotion/FaceEmotion'
 import VoiceEmotion from './Components/MultiModalEmotion/VoiceEmotion'
 import TextEmotion from './Components/MultiModalEmotion/TextEmotion'
+import UpgradeAccount from './Components/Profile/UpgradeAccount'
 import { ThemeProvider } from './Context/ThemeContext'
 import AppLayout from './Components/LayOut/Applayout'
+import ErrorPage from './Components/common/ErrorPage'
+import ErrorBoundary from './Components/common/ErrorBoundary'
 
 
 // Main Application Router Configuration
@@ -66,6 +69,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />, // auth gate
+    errorElement: <ErrorPage />,
   },
 
   {
@@ -104,6 +108,7 @@ const router = createBrowserRouter([
 
 
       { path: "/appointments/:appointmentId/review", element: <AddReview /> },
+      { path: "/upgrade", element: <UpgradeAccount /> },
       { path: "/therapist/dashboard/appointments", element: <TherapistDashboard /> },
 
 
@@ -161,12 +166,14 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <ThemeProvider>
-    <UserProvider>
-      <SocketProvider>
-        <RouterProvider router={router} />
-        <ToastContainer position="top-right" autoClose={3000} theme="colored" />
-      </SocketProvider>
-    </UserProvider>
-  </ThemeProvider>
+  <ErrorBoundary>
+    <ThemeProvider>
+      <UserProvider>
+        <SocketProvider>
+          <RouterProvider router={router} />
+          <ToastContainer position="top-right" autoClose={3000} theme="colored" />
+        </SocketProvider>
+      </UserProvider>
+    </ThemeProvider>
+  </ErrorBoundary>
 )

@@ -97,11 +97,11 @@ const UserChatInterface = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <BackgroundOrbs />
-        <div className="text-white text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500 mx-auto mb-4"></div>
-          <p>Loading conversation...</p>
+      <div className="min-h-screen bg-main flex items-center justify-center p-6 text-center">
+        <div className="flex flex-col items-center">
+          <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mb-6" />
+          <h2 className="text-2xl font-bold tracking-tight text-bright">Restoring Stream</h2>
+          <p className="text-dim mt-2 font-medium">Synchronizing neural messages...</p>
         </div>
       </div>
     );
@@ -109,178 +109,57 @@ const UserChatInterface = () => {
 
   if (!otherUser) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <BackgroundOrbs />
-        <div className="text-center text-white">
-          <div className="text-6xl mb-4">❌</div>
-          <h2 className="text-2xl font-bold mb-2">Chat not found</h2>
-          <p className="text-gray-400 mb-4">Unable to load conversation</p>
+      <div className="min-h-screen flex items-center justify-center bg-main p-6 text-center">
+        <div className="glass-panel p-10 max-w-md w-full">
+          <div className="text-6xl mb-6 opacity-20">📡</div>
+          <h2 className="text-2xl font-bold text-bright mb-2">Signal Lost</h2>
+          <p className="text-dim mb-8">The requested conversation channel could not be established.</p>
           <button
             onClick={() => navigate('/chat')}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl transition-colors"
+            className="w-full bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold px-6 py-4 rounded-2xl transition shadow-lg active:scale-95"
           >
-            Back to Chats
+            Return to Hub
           </button>
         </div>
       </div>
     );
   }
 
-  // return (
-  //   <div className="h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col">
-  //     <BackgroundOrbs />
-
-  //     {/* Header - Fixed with name after avatar */}
-  //     <div className="backdrop-blur-md bg-white/5 border-b border-white/20 p-4 flex items-center justify-between z-10">
-  //       <div className="flex items-center gap-4">
-  //         {/* Back button */}
-  //         <button
-  //           onClick={() => navigate('/chat')}
-  //           className="p-2 rounded-lg hover:bg-white/10 transition-colors duration-200 text-white"
-  //         >
-  //           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-  //             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-  //           </svg>
-  //         </button>
-
-  //         {/* Avatar and Name side by side */}
-  //         <div className="flex items-center gap-3">
-  //           {/* Avatar with online indicator */}
-  //           <div className="relative">
-  //             <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-xl text-white shadow-lg">
-  //               {getAvatar(otherUser)}
-  //             </div>
-  //             {otherUser.profile?.isOnline && (
-  //               <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-slate-900 animate-pulse" />
-  //             )}
-  //           </div>
-
-  //           {/* User's Name - Using the proper display name function */}
-  //           <div>
-  //             <h2 className="font-semibold text-lg text-white">
-  //               {getDisplayName(otherUser)}
-  //             </h2>
-  //             <p className="text-sm text-gray-400">
-  //               {otherUser.profile?.isOnline ? 'Online' : 'Offline'}
-  //             </p>
-  //           </div>
-  //         </div>
-  //       </div>
-
-
-  //       <div className="new-chat">
-  //         <Link to="/roomManager" className="flex items-center gap-2">
-  //           <FaVideo className="text-xl text-green-500" />
-  //           {/* {extended && <p>Meeting</p>} */}
-  //         </Link>
-  //       </div>
-  //     </div>
-
-  //     {/* Messages Container */}
-  //     <div className="flex-1 overflow-y-auto p-6 space-y-4">
-  //       {messages.length === 0 ? (
-  //         <div className="h-full flex items-center justify-center">
-  //           <div className="text-center text-gray-400">
-  //             <div className="text-6xl mb-4">💬</div>
-  //             <h3 className="text-xl font-semibold mb-2">No messages yet</h3>
-  //             <p>Start the conversation by sending a message!</p>
-  //           </div>
-  //         </div>
-  //       ) : (
-  //         messages.map((message) => (
-  //           <div
-  //             key={message._id}
-  //             className={`flex ${message.sender._id === user._id ? 'justify-end' : 'justify-start'}`}
-  //           >
-  //             <div
-  //               className={`max-w-xs md:max-w-md lg:max-w-lg rounded-2xl p-4 shadow-lg ${
-  //                 message.sender._id === user._id
-  //                   ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white'
-  //                   : 'backdrop-blur-md bg-white/5 text-gray-100 border border-white/20'
-  //               }`}
-  //             >
-  //               {/* Show sender name for other user's messages */}
-  //               {message.sender._id !== user._id && (
-  //                 <p className="text-xs text-gray-300 mb-1 font-medium">
-  //                   {getDisplayName(message.sender)}
-  //                 </p>
-  //               )}
-  //               <p className="whitespace-pre-wrap break-words">{message.text}</p>
-  //               <p className={`text-xs mt-2 ${message.sender._id === user._id ? 'text-purple-200' : 'text-gray-400'}`}>
-  //                 {formatTime(message.createdAt)}
-  //               </p>
-  //             </div>
-  //           </div>
-  //         ))
-  //       )}
-  //       <div ref={messagesEndRef} />
-  //     </div>
-
-  //     {/* Input Area */}
-  //     <div className="backdrop-blur-md bg-white/5 border-t border-white/20 p-4 z-10">
-  //       <div className="flex gap-3 max-w-4xl mx-auto">
-  //         <textarea
-  //           value={inputMessage}
-  //           onChange={(e) => setInputMessage(e.target.value)}
-  //           onKeyPress={handleKeyPress}
-  //           placeholder="Type your message... (Press Enter to send)"
-  //           className="flex-1 bg-white/5 border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-  //           rows="1"
-  //           disabled={isSending}
-  //         />
-  //         <button
-  //           onClick={handleSendMessage}
-  //           disabled={!inputMessage.trim() || isSending}
-  //           className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 disabled:scale-100 flex items-center gap-2 min-w-[100px] justify-center"
-  //         >
-  //           {isSending ? (
-  //             <>
-  //               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-  //               <span>Sending</span>
-  //             </>
-  //           ) : (
-  //             'Send'
-  //           )}
-  //         </button>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
-
   return (
-    <div className="h-full flex flex-col animate-fade-in-up">
+    <div className="h-screen flex flex-col animate-fade-in-up overflow-hidden">
       {/* Header - Fixed Glassmorphism */}
-      <div className="glass-panel rounded-none border-t-0 border-x-0 bg-white/5 backdrop-blur-xl p-4 flex items-center justify-between z-10 mx-[-2rem] md:mx-[-4rem] mt-[-2rem] md:mt-[-4rem] px-6 md:px-12">
-        <div className="flex items-center gap-4">
+      <div className="glass-panel rounded-none border-t-0 border-x-0 bg-white/5 backdrop-blur-3xl p-5 flex items-center justify-between z-20 px-8 shrink-0">
+        <div className="flex items-center gap-6">
           {/* Back button */}
           <button
             onClick={() => navigate('/chat')}
-            className="p-2 rounded-xl hover:bg-white/10 transition-all duration-300 text-gray-300 hover:text-white border border-white/5"
+            className="p-2.5 rounded-xl hover:bg-white/10 transition-all duration-300 text-gray-400 hover:text-white border border-white/5 active:scale-90"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           {/* Avatar + Name */}
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-xl text-white shadow-lg border border-white/10">
+          <div className="flex items-center gap-4">
+            <div className="relative group cursor-pointer">
+              <div className="absolute inset-0 bg-cyan-500/20 rounded-2xl blur-lg group-hover:opacity-100 opacity-0 transition-opacity" />
+              <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-2xl text-white shadow-2xl border border-white/20 transform group-hover:scale-105 transition-transform">
                 {getAvatar(otherUser)}
               </div>
               {otherUser.profile?.isOnline && (
-                <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-[#050810] shadow-glow" />
+                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-[3px] border-[#050810] shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
               )}
             </div>
 
             <div>
-              <h2 className="font-bold text-lg text-bright leading-tight">
+              <h2 className="font-black text-xl text-bright leading-none tracking-tighter uppercase">
                 {getDisplayName(otherUser)}
               </h2>
-              <div className="flex items-center gap-1.5">
-                <span className={`w-1.5 h-1.5 rounded-full ${otherUser.profile?.isOnline ? 'bg-emerald-500' : 'bg-gray-500'}`} />
-                <p className="text-xs font-medium text-gray-400">
-                  {otherUser.profile?.isOnline ? 'Online' : 'Offline'}
+              <div className="flex items-center gap-2 mt-1.5">
+                <span className={`w-2 h-2 rounded-full ${otherUser.profile?.isOnline ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]' : 'bg-gray-600'}`} />
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-dim">
+                  {otherUser.profile?.isOnline ? 'Active Connection' : 'Offline Mode'}
                 </p>
               </div>
             </div>
@@ -288,40 +167,60 @@ const UserChatInterface = () => {
         </div>
 
         {/* Meeting Button */}
-        <Link to="/roomManager" className="p-2.5 rounded-xl bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/50 transition-all group">
-          <FaVideo className="text-xl text-gray-400 group-hover:text-cyan-400" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <button className="hidden sm:flex p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-dim hover:text-bright transition-all active:scale-95">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+          <Link to="/roomManager" className="p-3.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 hover:from-cyan-500/30 hover:to-blue-600/30 border border-cyan-500/30 hover:border-cyan-400 transition-all group shadow-lg shadow-cyan-900/10 active:scale-95">
+            <FaVideo className="text-xl text-cyan-400" />
+          </Link>
+        </div>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-4 md:p-10 space-y-2 custom-scrollbar bg-white/[0.01]">
         {messages.length === 0 ? (
           <div className="h-full flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-5xl mb-4 opacity-20">💬</div>
-              <h3 className="text-lg font-semibold text-gray-400">No messages yet</h3>
-              <p className="text-sm text-gray-500">Break the ice and start talking!</p>
+            <div className="text-center animate-pulse">
+              <div className="text-6xl mb-4 opacity-10">💬</div>
+              <h3 className="text-xl font-bold text-gray-500 tracking-tight">Begin Connection</h3>
+              <p className="text-sm text-gray-600 mt-1">Start your encrypted neural dialogue...</p>
             </div>
           </div>
         ) : (
-          messages.map((message) => {
+          messages.map((message, index) => {
             const isOwn = message.sender._id === user._id;
+            const prevMessage = messages[index - 1];
+            const isFirstInGroup = !prevMessage || prevMessage.sender._id !== message.sender._id;
+
             return (
-              <div key={message._id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
-                <div className={`max-w-[85%] md:max-w-[70%] lg:max-w-[60%] flex flex-col ${isOwn ? 'items-end' : 'items-start'}`}>
-                  {!isOwn && (
-                    <span className="text-[10px] font-bold text-gray-400 mb-1 ml-4 uppercase tracking-wider">
+              <div
+                key={message._id}
+                className={`flex ${isOwn ? 'justify-end' : 'justify-start'} ${isFirstInGroup ? 'mt-6' : 'mt-1'}`}
+              >
+                <div className={`max-w-[85%] md:max-w-[75%] flex flex-col ${isOwn ? 'items-end' : 'items-start'}`}>
+                  {isFirstInGroup && !isOwn && (
+                    <span className="text-[10px] font-black text-cyan-500/60 mb-1.5 ml-4 uppercase tracking-[0.2em]">
                       {getDisplayName(message.sender)}
                     </span>
                   )}
+
                   <div
-                    className={`relative p-4 rounded-2xl shadow-xl transition-all ${isOwn
-                      ? 'bg-gradient-to-br from-cyan-600 to-blue-700 text-white rounded-tr-none border border-white/10'
-                      : 'glass-card bg-white/5 text-auto rounded-tl-none border border-white/10'
+                    className={`group relative p-4 shadow-2xl transition-all duration-300 ${isOwn
+                      ? 'bg-gradient-to-br from-cyan-600 to-blue-700 text-white border border-white/10'
+                      : 'glass-panel bg-white/5 text-bright border-white/5'
+                      } ${isFirstInGroup
+                        ? (isOwn ? 'rounded-2xl rounded-tr-none' : 'rounded-2xl rounded-tl-none')
+                        : 'rounded-2xl'
                       }`}
                   >
-                    <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words">{message.text}</p>
-                    <div className={`text-[10px] mt-2 font-medium opacity-60 ${isOwn ? 'text-right' : 'text-left'}`}>
+                    <p className="text-[15px] leading-relaxed whitespace-pre-wrap break-words font-medium">
+                      {message.text}
+                    </p>
+
+                    <div className={`text-[9px] mt-2 font-black uppercase tracking-widest opacity-0 group-hover:opacity-40 transition-opacity ${isOwn ? 'text-right' : 'text-left'}`}>
                       {formatTime(message.createdAt)}
                     </div>
                   </div>
@@ -334,17 +233,18 @@ const UserChatInterface = () => {
       </div>
 
       {/* Input Area */}
-      <div className="glass-panel bg-white/5 border-b-0 border-x-0 rounded-none p-4 md:p-6 mx-[-2rem] md:mx-[-4rem] mb-[-2rem] md:mb-[-4rem]">
-        <div className="flex gap-3 max-w-5xl mx-auto items-end">
-          <div className="flex-1 relative">
+      <div className="glass-panel bg-white/5 border-b-0 border-x-0 rounded-none p-6 shrink-0 z-10 backdrop-blur-2xl">
+        <div className="flex gap-4 max-w-6xl mx-auto items-center">
+          <div className="flex-1 relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl blur-xl group-focus-within:opacity-100 opacity-0 transition-opacity" />
             <textarea
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Type a message..."
-              className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-bright 
-                       placeholder-gray-500 focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500/50 
-                       resize-none transition-all outline-none text-[15px]"
+              placeholder="Type a message to transmit..."
+              className="relative w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-bright 
+                       placeholder-gray-500 focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-500/30 
+                       resize-none transition-all outline-none text-[15px] font-medium leading-relaxed min-h-[58px] max-h-[150px]"
               rows="1"
               disabled={isSending}
             />
@@ -353,23 +253,24 @@ const UserChatInterface = () => {
           <button
             onClick={handleSendMessage}
             disabled={!inputMessage.trim() || isSending}
-            className="h-[56px] px-8 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 
+            className="shrink-0 h-[58px] w-[58px] md:w-auto md:px-10 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 
                      hover:from-cyan-400 hover:to-blue-500 disabled:opacity-50 disabled:scale-100
-                     text-white font-bold transition-all transform hover:scale-[1.02] active:scale-95
-                     flex items-center gap-2 shadow-lg shadow-cyan-900/20"
+                     text-white font-black transition-all transform hover:scale-[1.05] active:scale-95
+                     flex items-center justify-center gap-3 shadow-lg shadow-cyan-900/40 uppercase tracking-widest text-xs"
           >
             {isSending ? (
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               <>
-                <span>Send</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="hidden md:block">Transmit</span>
+                <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </>
             )}
           </button>
         </div>
+        <p className="text-[10px] text-dim text-center mt-3 font-bold uppercase tracking-[0.3em] opacity-30">Encrypted Neural Stream v2.1</p>
       </div>
     </div>
   );

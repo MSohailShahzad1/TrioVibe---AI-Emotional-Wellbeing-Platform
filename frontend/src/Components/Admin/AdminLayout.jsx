@@ -11,48 +11,65 @@ export default function AdminLayout({ children }) {
   };
 
   return (
-    <div className="flex h-screen bg-slate-900 text-white">
+    <div className="flex h-screen bg-main text-bright overflow-hidden">
 
       {/* ---------------- Sidebar ---------------- */}
-      <div className="w-64 bg-slate-800 p-6 flex flex-col border-r border-slate-700">
-        <h2 className="text-2xl font-bold mb-10">Admin Panel</h2>
+      <div className="w-72 bg-white/5 backdrop-blur-xl border-r border-white/10 p-8 flex flex-col shadow-2xl relative z-20">
+        <div className="flex items-center gap-3 mb-12">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xl shadow-lg">
+            ⚡
+          </div>
+          <h2 className="text-2xl font-black gradient-text tracking-tighter uppercase">Admin Core</h2>
+        </div>
 
-        <nav className="flex flex-col gap-4">
-          <Link className="hover:text-purple-400" to="/admin/dashboard">
-            📊 Dashboard
-          </Link>
-
-          <Link className="hover:text-purple-400" to="/admin/users">
-            👥 Users
-          </Link>
-
-          <Link className="hover:text-purple-400" to="/admin/requests">
-            📝 Therapist Requests
-          </Link>
-
-          <Link className="hover:text-purple-400" to="/admin/settings">
-            ⚙️ Settings
-          </Link>
+        <nav className="flex flex-col gap-2">
+          {[
+            { to: "/admin/dashboard", label: "Analytics Hub", icon: "📊" },
+            { to: "/admin/users", label: "User Directory", icon: "👥" },
+            { to: "/admin/requests", label: "Specialist Requests", icon: "📝" },
+          ].map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="group flex items-center gap-4 px-4 py-3 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all text-dim hover:text-bright font-bold text-sm"
+            >
+              <span className="text-xl group-hover:scale-110 transition-transform">{item.icon}</span>
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         <button
           onClick={logout}
-          className="mt-auto bg-red-600 hover:bg-red-700 p-2 rounded text-center"
+          className="mt-auto group flex items-center gap-4 px-4 py-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 hover:bg-red-500/20 transition-all font-bold text-sm"
         >
-          Logout
+          <span className="text-xl group-hover:rotate-12 transition-transform">🚪</span>
+          Terminate Session
         </button>
       </div>
 
       {/* ---------------- Main Content ---------------- */}
-      <div className="flex-1 flex flex-col overflow-auto">
-        
+      <div className="flex-1 flex flex-col overflow-auto bg-main/50 relative z-10">
+
         {/* Header */}
-        <div className="p-4 border-b border-slate-700 bg-slate-800">
-          <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
-        </div>
+        <header className="px-8 py-6 border-b border-white/5 backdrop-blur-md bg-white/2 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold text-bright">Command Center</h1>
+            <p className="text-[10px] text-dim font-black uppercase tracking-[0.2em] mt-0.5">Control Sector Alpha</p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <p className="text-xs font-bold text-bright">Master Administrator</p>
+              <p className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">Nexus Verified</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-xl">
+              ⚙️
+            </div>
+          </div>
+        </header>
 
         {/* Page Content */}
-        <div className="p-6">{children}</div>
+        <main className="p-8 animate-fade-in-up">{children}</main>
       </div>
 
     </div>

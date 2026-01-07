@@ -30,46 +30,70 @@ export default function AdminTherapistRequests() {
   };
 
   return (
-    <div className="p-6 text-white">
-      <h1 className="text-3xl font-bold mb-6">Therapist Requests</h1>
+    <div className="space-y-8 animate-fade-in-up">
+      <div className="flex justify-between items-end mb-4">
+        <div>
+          <h1 className="text-3xl font-black text-bright tracking-tighter uppercase">Specialist Requests</h1>
+          <p className="text-dim text-sm font-medium">Clearance required for professional role elevation.</p>
+        </div>
+        <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
+          <p className="text-[10px] font-black uppercase tracking-widest text-dim">Total Pending</p>
+          <p className="text-xl font-bold text-cyan-500">{requests.length}</p>
+        </div>
+      </div>
 
-      <div className="bg-gray-900 p-4 rounded-xl shadow-xl">
-        <table className="w-full text-left">
-          <thead>
-            <tr className="text-gray-400 border-b border-gray-700">
-              <th className="py-3">Name</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {requests.map((user) => (
-              <tr key={user._id} className="border-b border-gray-700">
-                <td className="py-3">{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <button
-                    onClick={() => handleAction(user._id, "approve")}
-                    className="bg-green-600 px-4 py-2 rounded-lg mr-2"
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    onClick={() => handleAction(user._id, "reject")}
-                    className="bg-red-600 px-4 py-2 rounded-lg"
-                  >
-                    Reject
-                  </button>
-                </td>
+      <div className="glass-panel overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-white/5 bg-white/2">
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-dim">Identity</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-dim">Communication</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-dim text-right">Clearance Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody className="divide-y divide-white/5">
+              {requests.map((user) => (
+                <tr key={user._id} className="hover:bg-white/2 transition-colors group">
+                  <td className="px-6 py-5">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center text-lg shadow-inner">
+                        👤
+                      </div>
+                      <span className="font-bold text-bright">{user.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-5">
+                    <span className="text-sm font-medium text-auto opacity-70">{user.email}</span>
+                  </td>
+                  <td className="px-6 py-5 text-right">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        onClick={() => handleAction(user._id, "approve")}
+                        className="bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-95"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleAction(user._id, "reject")}
+                        className="bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-95"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         {requests.length === 0 && (
-          <p className="text-gray-400 text-center py-5">No pending requests</p>
+          <div className="p-20 text-center">
+            <div className="text-6xl mb-4 opacity-10">📂</div>
+            <p className="text-dim font-bold tracking-widest uppercase text-sm">No pending clearance requests</p>
+          </div>
         )}
       </div>
     </div>

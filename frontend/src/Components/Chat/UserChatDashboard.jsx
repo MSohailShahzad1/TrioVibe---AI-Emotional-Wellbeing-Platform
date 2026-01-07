@@ -285,9 +285,10 @@ const UserChatDashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <BackgroundOrbs />
-        <LoadingSpinner size="lg" text="Loading your conversations..." />
+      <div className="min-h-screen bg-main flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin mb-6" />
+        <h2 className="text-2xl font-bold tracking-tight text-bright">Loading Conversations</h2>
+        <p className="text-dim mt-2">Connecting to the neural network...</p>
       </div>
     );
   }

@@ -92,58 +92,25 @@ export default function Therapists() {
           {/* Search */}
           <div>
             <label className="text-sm text-dim font-bold uppercase tracking-wider">Search</label>
-            <div className="relative mt-1">
+            <div className="relative mt-1 group">
+              <FaSearch className="absolute left-75 top-1/2 -translate-y-1/2 text-dim group-focus-within:text-cyan-400 transition-colors" />
               <input
                 type="text"
                 placeholder="Search by name..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="
-                  w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20
-                  backdrop-blur-lg focus:outline-none text-white
+                  w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10
+                  focus:outline-none focus:border-cyan-500/50 text-bright transition-all
                 "
               />
-              <FaSearch className="absolute right-4 top-3 text-gray-300" />
             </div>
           </div>
 
           {/* Filter by Support Type */}
-          <div>
-            <label className="text-sm text-dim font-bold uppercase tracking-wider">Support Type</label>
-            <select
-              value={supportType}
-              onChange={(e) => setSupportType(e.target.value)}
-              className="
-                w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
-                backdrop-blur-lg focus:outline-none text-white
-              "
-            >
-              <option value="all">All</option>
-              <option value="peer-support">Peer Support</option>
-              <option value="therapy">Therapy</option>
-              <option value="counseling">Counseling</option>
-            </select>
-          </div>
 
           {/* Filter by Rating */}
-          <div>
-            <label className="text-sm text-dim font-bold uppercase tracking-wider">Minimum Rating</label>
-            <select
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              className="
-                w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 
-                backdrop-blur-lg focus:outline-none text-white
-              "
-            >
-              <option value="all">All Ratings</option>
-              <option value="1">⭐ 1+</option>
-              <option value="2">⭐ 2+</option>
-              <option value="3">⭐ 3+</option>
-              <option value="4">⭐ 4+</option>
-              <option value="5">⭐ 5 Only</option>
-            </select>
-          </div>
+
         </div>
       </div>
       <div className="new-chat">

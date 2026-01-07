@@ -27,60 +27,81 @@ export default function AdminUsers() {
   );
 
   return (
-    <div className="p-10 text-white bg-slate-900 h-screen overflow-auto">
+    <div className="space-y-8 animate-fade-in-up">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-4">
+        <div>
+          <h1 className="text-3xl font-black text-bright tracking-tighter uppercase">User Directory</h1>
+          <p className="text-dim text-sm font-medium">Full access to the neural participant database.</p>
+        </div>
 
-      <h1 className="text-3xl font-bold mb-5">User Management</h1>
+        <div className="relative w-full md:w-80">
+          <input
+            type="text"
+            placeholder="Search Protocol..."
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-12 py-3 text-bright focus:ring-2 focus:ring-cyan-500/40 outline-none transition-all placeholder:text-dim font-bold"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl opacity-40">🔍</span>
+        </div>
+      </div>
 
-      {/* Search Bar */}
-      <input
-        type="text"
-        placeholder="Search by name or email"
-        className="p-2 rounded bg-slate-700 mb-4 w-1/3 outline-none"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      <div className="glass-panel overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b border-white/5 bg-white/2">
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-dim">Participant</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-dim">Access Role</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-dim">Upgrade Status</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-dim text-right">Operations</th>
+              </tr>
+            </thead>
 
-      {/* Users Table */}
-      <table className="w-full bg-slate-800 rounded-xl overflow-hidden">
-        <thead>
-          <tr className="bg-slate-700 text-left">
-            <th className="p-3">Name</th>
-            <th className="p-3">Email</th>
-            <th className="p-3">Role</th>
-            <th className="p-3">Therapist Request</th>
-            <th className="p-3">Action</th>
-          </tr>
-        </thead>
+            <tbody className="divide-y divide-white/5">
+              {filteredUsers.map((user) => (
+                <tr key={user._id} className="hover:bg-white/2 transition-colors group">
+                  <td className="px-6 py-5">
+                    <div className="flex flex-col">
+                      <span className="font-bold text-bright">{user.name}</span>
+                      <span className="text-xs text-dim">{user.email}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-5">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${user.role === 'admin' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' :
+                      user.role === 'therapist' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' :
+                        'bg-cyan-500/10 border-cyan-500/20 text-cyan-400'
+                      }`}>
+                      {user.role}
+                    </span>
+                  </td>
 
-        <tbody>
-          {filteredUsers.map((user) => (
-            <tr key={user._id} className="border-b border-slate-600">
-              <td className="p-3">{user.name}</td>
-              <td className="p-3">{user.email}</td>
-              <td className="p-3 capitalize">{user.role}</td>
+                  <td className="px-6 py-5">
+                    {user.therapistRequest === 'pending' ? (
+                      <div className="flex items-center gap-2 text-yellow-500 font-bold text-xs uppercase tracking-wider animate-pulse">
+                        <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
+                        Awaiting Clearance
+                      </div>
+                    ) : (
+                      <span className="text-dim text-xs font-bold uppercase tracking-widest opacity-30">Standard Access</span>
+                    )}
+                  </td>
 
-              <td className="p-3">
-                {user.therapistRequest ? (
-                  <span className="text-yellow-400">Pending</span>
-                ) : (
-                  <span className="text-gray-400">No Request</span>
-                )}
-              </td>
+                  <td className="px-6 py-5 text-right">
+                    <button
+                      onClick={() => setSelectedUser(user)}
+                      className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-bold uppercase tracking-wider text-bright transition-all active:scale-95"
+                    >
+                      Modify
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-              <td className="p-3">
-                <button
-                  onClick={() => setSelectedUser(user)}
-                  className="px-3 py-1 bg-purple-600 rounded hover:bg-purple-700"
-                >
-                  Edit
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Edit User Modal */}
       {selectedUser && (
         <EditUserModal
           user={selectedUser}

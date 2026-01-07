@@ -55,26 +55,41 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
       {/* Total Users */}
-      <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow">
-        <h2 className="text-xl font-semibold mb-3">Total Users</h2>
-        <p className="text-4xl font-bold text-purple-400">{stats.totalUsers}</p>
+      <div className="glass-panel p-8 relative overflow-hidden group hover:shadow-cyan-500/10 transition-all">
+        <div className="absolute top-0 right-0 p-4 opacity-5 text-6xl group-hover:scale-110 transition-transform">👥</div>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-dim mb-4">Network Population</p>
+        <h2 className="text-xl font-bold text-bright mb-2">Total Participants</h2>
+        <p className="text-5xl font-black text-cyan-500 tracking-tighter">{stats.totalUsers}</p>
+        <div className="mt-6 pt-6 border-t border-white/5">
+          <p className="text-xs text-dim italic">Synchronized across all sectors</p>
+        </div>
       </div>
 
       {/* Therapists */}
-      <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow">
-        <h2 className="text-xl font-semibold mb-3">Therapists</h2>
-        <p className="text-4xl font-bold text-green-400">{stats.therapists}</p>
+      <div className="glass-panel p-8 relative overflow-hidden group hover:shadow-emerald-500/10 transition-all">
+        <div className="absolute top-0 right-0 p-4 opacity-5 text-6xl group-hover:scale-110 transition-transform">🎓</div>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-dim mb-4">Verified Specialists</p>
+        <h2 className="text-xl font-bold text-bright mb-2">Active Clinicians</h2>
+        <p className="text-5xl font-black text-emerald-500 tracking-tighter">{stats.therapists}</p>
+        <div className="mt-6 pt-6 border-t border-white/5">
+          <p className="text-xs text-dim italic">Certified neural moderators</p>
+        </div>
       </div>
 
       {/* Pending Requests */}
-      <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow">
-        <h2 className="text-xl font-semibold mb-3">Pending Requests</h2>
-        <p className="text-4xl font-bold text-yellow-400">
+      <div className="glass-panel p-8 relative overflow-hidden group hover:shadow-yellow-500/10 transition-all border-yellow-500/20">
+        <div className="absolute top-0 right-0 p-4 opacity-5 text-6xl group-hover:scale-110 transition-transform">📝</div>
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-yellow-500/60 mb-4">Action Required</p>
+        <h2 className="text-xl font-bold text-bright mb-2">Pending Upgrades</h2>
+        <p className="text-5xl font-black text-yellow-500 tracking-tighter">
           {stats.pendingRequests}
         </p>
+        <div className="mt-6 pt-6 border-t border-white/5">
+          <p className="text-xs text-dim italic">Awaiting clearance confirmation</p>
+        </div>
       </div>
 
     </div>

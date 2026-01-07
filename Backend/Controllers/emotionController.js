@@ -29,7 +29,10 @@ export const saveResult = async (req, res) => {
 
 export const getUserResults = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.body;
+    if (!userId) {
+      return res.status(400).json({ success: false, message: "UserId is required" });
+    }
     const results = await EmotionResult.find({ userId }).sort({ timestamp: -1 });
     res.json({ success: true, data: results });
   } catch (error) {

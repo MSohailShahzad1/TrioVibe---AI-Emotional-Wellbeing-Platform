@@ -132,7 +132,7 @@ export default function TextEmotion() {
             rows={6}
             className="relative w-full p-8 rounded-2xl bg-white/5
                        border border-white/10
-                       placeholder-gray-600 text-gray-200
+                       placeholder-gray-500 text-auto
                        focus:outline-none focus:border-cyan-500/50 
                        transition-all resize-none text-lg shadow-inner"
             placeholder="Type how you are feeling right now..."

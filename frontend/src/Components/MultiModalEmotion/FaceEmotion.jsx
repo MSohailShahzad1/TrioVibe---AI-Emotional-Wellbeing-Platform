@@ -3,16 +3,20 @@ import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 import * as faceapi from "face-api.js";
 import EmotionNavbar from "./EmotionNavbar";
+import { useUser } from "../../Context/UserContext";
 
 export default function FaceEmotion() {
+  const { user } = useUser();
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const intervalRef = useRef(null);
 
   const [emotion, setEmotion] = useState("neutral");
+  const [confidence, setConfidence] = useState(0);
   const [cameraOn, setCameraOn] = useState(false);
   const [modelsLoaded, setModelsLoaded] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [saving, setSaving] = useState(false);
 
   /* ------------------ LOAD MODELS ------------------ */
   useEffect(() => {
@@ -71,6 +75,7 @@ export default function FaceEmotion() {
           const expr = detections[0].expressions;
           const top = Object.entries(expr).sort((a, b) => b[1] - a[1])[0];
           setEmotion(top[0]);
+          setConfidence(top[1]);
         }
       }
     }, 1000);
@@ -80,6 +85,38 @@ export default function FaceEmotion() {
     setCameraOn(false);
     clearInterval(intervalRef.current);
     intervalRef.current = null;
+  };
+
+  const handleSaveResult = async () => {
+    if (!emotion || saving) return;
+
+    setSaving(true);
+    try {
+      if (!user?._id) throw new Error("User not found");
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/emotion/saveResult`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: user._id,
+          emotion: emotion,
+          probability: confidence,
+          sourceType: "video", // Using video as it's from webcam
+          extraData: { method: "face-api.js" }
+        })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        // Optional: Success toast or feedback
+        // alert("Snapshot saved to history!");
+      }
+    } catch (error) {
+      console.error("Failed to save result:", error);
+      alert(error.message); // Show error to user
+    } finally {
+      setSaving(false);
+    }
   };
 
   /* ------------------ UI ------------------ */
@@ -150,7 +187,7 @@ export default function FaceEmotion() {
           <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">
             Analysis Result
           </h3>
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2 mb-6">
             <span className="text-4xl font-black gradient-text">
               {emotion.toUpperCase()}
             </span>
@@ -158,6 +195,25 @@ export default function FaceEmotion() {
               {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />)}
             </div>
           </div>
+
+          <button
+            onClick={handleSaveResult}
+            disabled={!cameraOn || saving}
+            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 
+                     border border-cyan-500/30 hover:border-cyan-400 text-cyan-400 font-bold transition-all 
+                     active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase tracking-wide"
+          >
+            {saving ? (
+              <>
+                <div className="w-4 h-4 border-2 border-cyan-500 border-t-transparent animate-spin rounded-full" />
+                Saving...
+              </>
+            ) : (
+              <>
+                <span>📸</span> Capture Snapshot
+              </>
+            )}
+          </button>
         </div>
 
         {/* Loading Overlay */}

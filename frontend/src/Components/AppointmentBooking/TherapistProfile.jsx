@@ -62,18 +62,18 @@ export default function TherapistProfile() {
   };
   const [ratingData, setRatingData] = useState({ rating: 0, totalReviews: 0 });
 
-useEffect(() => {
-  const fetchRating = async () => {
-    try {
-      const res = await axios.get(`http://localhost:5000/api/therapist/${id}/rating`);
-      setRatingData(res.data);
-    } catch (err) {
-      console.error("Failed to fetch rating", err);
-    }
-  };
+  useEffect(() => {
+    const fetchRating = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/therapist/${id}/rating`);
+        setRatingData(res.data);
+      } catch (err) {
+        console.error("Failed to fetch rating", err);
+      }
+    };
 
-  fetchRating();
-}, [id]);
+    fetchRating();
+  }, [id]);
 
 
   useEffect(() => {
@@ -97,100 +97,124 @@ useEffect(() => {
   }
 
   return (
-    <div className="min-h-full bg-gradient-to-br from-[#0d1b2a] via-[#1b263b] to-[#415a77] p-6 text-white">
+    <div className="min-h-full w-full p-6 animate-fade-in-up">
       <div className="max-w-4xl mx-auto space-y-8">
 
         {/* TOP CARD */}
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row items-center gap-6">
-          <div className="text-6xl w-28 h-28 flex items-center justify-center bg-white/10 rounded-2xl">
+        <div className="glass-panel p-8 flex flex-col md:flex-row items-center gap-8">
+          <div className="text-6xl w-32 h-32 flex items-center justify-center bg-white/5 rounded-3xl border border-white/10 shadow-2xl">
             {therapist.profile?.avatar || "👤"}
           </div>
 
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold">
+          <div className="flex-1 text-center md:text-left">
+            <h1 className="text-4xl font-bold text-bright tracking-tight mb-2">
               {therapist.profile?.fullName || therapist.name}
             </h1>
-            <p className="text-gray-300 mt-1">
-              {therapist.therapyPreferences?.supportType || "Therapist"}
+            <p className="text-cyan-500 font-bold uppercase tracking-widest text-sm">
+              {therapist.therapyPreferences?.supportType || "Mental Health Specialist"}
             </p>
 
-            <div className="flex items-center gap-2 mt-3">
-              <FaStar className="text-yellow-400" />
-              <span className="font-semibold">
-                {/* {therapist.rating?.toFixed(1) || "0.0"} / 5 */}
-                {setRatingData}
-              </span>
-              <span className="text-gray-400 text-sm">
-                ({therapist.totalReviews || 0} reviews)
+            <div className="flex items-center gap-3 mt-4 justify-center md:justify-start">
+              <div className="flex items-center gap-1 bg-yellow-400/10 px-3 py-1 rounded-full border border-yellow-400/20">
+                <FaStar className="text-yellow-400 text-sm" />
+                <span className="font-bold text-yellow-400 text-sm">
+                  {therapist.rating?.toFixed(1) || "0.0"}
+                </span>
+              </div>
+              <span className="text-dim text-sm font-medium">
+                ({therapist.totalReviews || 0} Professional Reviews)
               </span>
             </div>
           </div>
         </div>
 
-        {/* ABOUT */}
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-xl">
-          <h2 className="text-2xl font-semibold mb-3">About</h2>
-          <p className="text-gray-300 text-sm leading-relaxed">
-            {therapist.profile?.bio || "No bio available."}
-          </p>
-        </div>
+        {/* Grid Layout for About and Experience */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* ABOUT */}
+          <div className="glass-panel p-8">
+            <h2 className="text-xl font-bold text-bright mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-6 bg-cyan-500 rounded-full" />
+              About Specialist
+            </h2>
+            <p className="text-auto leading-relaxed text-sm">
+              {therapist.profile?.bio || "This therapist has not provided a detailed bio yet, but is available for consultation."}
+            </p>
+          </div>
 
-        {/* EXPERIENCE */}
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-xl">
-          <h2 className="text-2xl font-semibold mb-3">Experience</h2>
-          {therapist.experience?.length > 0 ? (
-            <ul className="space-y-2 text-gray-300 text-sm">
-              {therapist.experience.map((exp, i) => (
-                <li key={i}>• {exp}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-400">No experience added yet.</p>
-          )}
+          {/* EXPERIENCE */}
+          <div className="glass-panel p-8">
+            <h2 className="text-xl font-bold text-bright mb-4 flex items-center gap-2">
+              <span className="w-1.5 h-6 bg-purple-500 rounded-full" />
+              Expertise & Experience
+            </h2>
+            {therapist.experience?.length > 0 ? (
+              <ul className="space-y-3">
+                {therapist.experience.map((exp, i) => (
+                  <li key={i} className="flex items-start gap-2 text-auto text-sm">
+                    <span className="text-cyan-500 mt-1">•</span>
+                    {exp}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-dim text-sm italic">Clinical experience details coming soon.</p>
+            )}
+          </div>
         </div>
 
         {/* REVIEWS */}
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-2xl shadow-xl">
+        <div className="glass-panel p-8">
           <div
-            className="flex justify-between items-center cursor-pointer"
+            className="flex justify-between items-center cursor-pointer group"
             onClick={() => setReviewsCollapsed(!reviewsCollapsed)}
           >
-            <h2 className="text-2xl font-semibold mb-4">Reviews</h2>
-            {reviewsCollapsed ? <FaChevronDown /> : <FaChevronUp />}
+            <h2 className="text-xl font-bold text-bright flex items-center gap-2">
+              <span className="w-1.5 h-6 bg-emerald-500 rounded-full" />
+              Client Testimonials
+            </h2>
+            <div className="p-2 rounded-lg bg-white/5 text-dim group-hover:text-bright transition-colors">
+              {reviewsCollapsed ? <FaChevronDown /> : <FaChevronUp />}
+            </div>
           </div>
 
-          {reviewsCollapsed ? null : (
-            <div className="max-h-96 overflow-y-auto">
+          {!reviewsCollapsed && (
+            <div className="mt-8 space-y-4 animate-fade-in-up">
               {reviews.length === 0 ? (
-                <p className="text-gray-400">No reviews yet.</p>
+                <div className="text-center py-12 bg-white/5 rounded-2xl border border-dashed border-white/10">
+                  <p className="text-dim">No public reviews available yet.</p>
+                </div>
               ) : (
-                reviews.map((review) => (
-                  <div
-                    key={review._id}
-                    className="bg-white/5 p-4 rounded-xl border border-white/10 mb-4"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl">
-                        {review.user?.profile?.avatar || "👤"}
+                <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                  {reviews.map((review) => (
+                    <div
+                      key={review._id}
+                      className="glass-card p-6 border-white/5"
+                    >
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-lg shadow-lg">
+                          {review.user?.profile?.avatar || "👤"}
+                        </div>
+                        <div>
+                          <p className="font-bold text-bright text-sm">
+                            {review.user?.profile?.fullName || review.user?.name || "Anonymous User"}
+                          </p>
+                          <div className="flex items-center text-yellow-400 text-xs mt-0.5">
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <FaStar key={i} className={i < review.rating ? "text-yellow-400" : "text-white/10"} />
+                            ))}
+                          </div>
+                        </div>
+                        <span className="ml-auto text-[10px] text-dim font-bold uppercase tracking-tighter">
+                          {new Date(review.createdAt).toLocaleDateString()}
+                        </span>
                       </div>
-                      <p className="font-semibold">
-                        {review.user?.profile?.fullName || review.user?.name || "Anonymous"}
+
+                      <p className="text-auto text-sm leading-relaxed italic pr-4">
+                        "{review.review}"
                       </p>
                     </div>
-
-                    <div className="flex items-center text-yellow-400 my-1">
-                      {Array.from({ length: review.rating }).map((_, i) => (
-                        <FaStar key={i} />
-                      ))}
-                    </div>
-
-                    <p className="text-gray-300 text-sm">{review.review}</p>
-
-                    <p className="text-gray-500 text-xs mt-1">
-                      {new Date(review.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                ))
+                  ))}
+                </div>
               )}
 
               {hasMore && (
@@ -201,9 +225,14 @@ useEffect(() => {
                     fetchReviews(next);
                   }}
                   disabled={loadingReviews}
-                  className="w-full mt-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 transition"
+                  className="w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-bright font-bold hover:bg-white/10 transition-all"
                 >
-                  {loadingReviews ? "Loading..." : "Load More"}
+                  {loadingReviews ? (
+                    <div className="flex items-center justify-center gap-2 text-sm">
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Loading...
+                    </div>
+                  ) : "Show More Experiences"}
                 </button>
               )}
             </div>
@@ -213,9 +242,9 @@ useEffect(() => {
         {/* BOOK BUTTON */}
         <button
           onClick={() => navigate(`/therapist/${id}/book`)}
-          className="w-full py-4 rounded-2xl font-semibold bg-gradient-to-r from-blue-500 to-blue-700 hover:opacity-90 transition"
+          className="w-full py-5 rounded-2xl font-bold bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-xl hover:shadow-cyan-500/20 active:scale-[0.98] transition-all text-lg tracking-tight"
         >
-          Book Appointment
+          Initialize Booking Protocol
         </button>
       </div>
     </div>
